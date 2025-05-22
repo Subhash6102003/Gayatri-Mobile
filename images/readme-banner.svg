@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="400" fill="#0f0f0f"/>
+  
+  <!-- Logo and site name -->
+  <g transform="translate(50, 50)">
+    <circle cx="50" cy="50" r="40" fill="#1a1a1a" stroke="#ffdd00" stroke-width="2"/>
+    <text x="120" y="50" font-family="Arial" font-size="40" font-weight="bold" fill="#ffdd00">Gayatri Mobile</text>
+    <text x="120" y="80" font-family="Arial" font-size="20" fill="#e0e0e0">Mobile Repair & Accessories Expert</text>
+    
+    <!-- Service icons -->
+    <g transform="translate(0, 150)">
+      <circle cx="50" cy="0" r="30" fill="#1c1c1c" stroke="#ffdd00" stroke-width="1"/>
+      <text x="50" y="5" font-family="Arial" font-size="20" text-anchor="middle" fill="#ffdd00">🔧</text>
+      <text x="50" y="50" font-family="Arial" font-size="14" text-anchor="middle" fill="#e0e0e0">Repairs</text>
+      
+      <circle cx="150" cy="0" r="30" fill="#1c1c1c" stroke="#ffdd00" stroke-width="1"/>
+      <text x="150" y="5" font-family="Arial" font-size="20" text-anchor="middle" fill="#ffdd00">📱</text>
+      <text x="150" y="50" font-family="Arial" font-size="14" text-anchor="middle" fill="#e0e0e0">Phones</text>
+      
+      <circle cx="250" cy="0" r="30" fill="#1c1c1c" stroke="#ffdd00" stroke-width="1"/>
+      <text x="250" y="5" font-family="Arial" font-size="20" text-anchor="middle" fill="#ffdd00">🔋</text>
+      <text x="250" y="50" font-family="Arial" font-size="14" text-anchor="middle" fill="#e0e0e0">Accessories</text>
+    </g>
+    
+    <!-- Contact info -->
+    <text x="500" y="150" font-family="Arial" font-size="16" fill="#e0e0e0">📞 8963900439, 7974639694</text>
+    <text x="500" y="180" font-family="Arial" font-size="16" fill="#e0e0e0">📍 Gour Colony, Malakhedi Road</text>
+    <text x="500" y="210" font-family="Arial" font-size="16" fill="#e0e0e0">Near SBI Bank, Narmadapuram (M.P.)</text>
+  </g>
+  
+  <!-- Bottom decoration -->
+  <rect x="0" y="350" width="800" height="50" fill="#ffdd00" opacity="0.1"/>
+  <text x="400" y="380" font-family="Arial" font-size="16" text-anchor="middle" fill="#ffdd00">www.gayatrimobile.com</text>
+</svg>

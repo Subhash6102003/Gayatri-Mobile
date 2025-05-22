@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mobile repair services and accessories in Narmadapuram. Expert repairs for all types of mobile phones with genuine parts.">
+    <meta name="theme-color" content="#ffdd00">
+    <title>Gayatri Mobile - Mobile Repair & Accessories Expert</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Vercel Speed Insights -->
+    <script>
+      window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+    <!-- Vercel Speed Insights -->
+    <script>
+      window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+    <style>
+        /* Transparent Header Styles */
+        header {
+            background-color: transparent !important;
+            box-shadow: none !important;
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        header.scrolled {
+            background-color: rgba(42, 44, 44, 0.95) !important;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4) !important;
+            padding: 12px 0;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        header .logo img {
+            transition: transform 0.4s ease;
+        }
+        
+        header.scrolled .logo img {
+            transform: scale(0.9);
+        }
+        
+        header.scrolled .brand-info h1 {
+            font-size: 1.6rem;
+        }
+        
+        header.scrolled .tagline {
+            font-size: 0.9rem;
+        }
+        
+        /* Increased padding for sections due to fixed header */
+        .hero {
+            padding: 180px 0 150px !important;
+            min-height: 100vh;
+        }
+        
+        .about, .accessories, .services, .testimonials, .contact {
+            padding-top: 110px !important;
+        }
+        
+        /* Feature icons styling */
+        .feature .brand-logo {
+            width: 20px;
+            height: 20px;
+            fill: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover .brand-logo {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header id="home">
+        <div class="container">
+            <div class="logo-container">                <div class="logo">
+                    <img src="images/logo.svg" alt="Gayatri Mobile Logo">
+                </div>
+                <div class="brand-info">
+                    <h1>Gayatri Mobile</h1>
+                    <p class="tagline">Mobile Repair & Accessories Expert</p>
+                </div>            </div>            <nav>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul>
+                    <li><a href="#home"><i class="fas fa-home nav-icon"></i> Home</a></li>
+                    <li><a href="#about"><i class="fas fa-info-circle nav-icon"></i> About</a></li>
+                    <li><a href="#accessories"><i class="fas fa-mobile-alt nav-icon"></i> Accessories</a></li>
+                    <li><a href="#services"><i class="fas fa-tools nav-icon"></i> Services</a></li>
+                    <li><a href="#testimonials"><i class="fas fa-star nav-icon"></i> Reviews</a></li>
+                    <li><a href="#contact"><i class="fas fa-envelope nav-icon"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>    <!-- Hero Section -->
+    <section class="hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="animated-heading">Expert Mobile Phone Repair Services</h2>
+                <p class="animated-text">Quality repairs with genuine parts and professional service</p>
+                <a href="#contact" class="btn-primary animated-button">Contact Us</a>
+            </div>
+        </div>
+    </section>    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title gsap-reveal">About Us</h2>
+            <div class="about-content">
+                <div class="about-3d">
+                    <canvas id="phone-model-canvas"></canvas>                    <div class="about-image">
+                        <img src="images/repair-shop.svg" alt="Mobile Repair Shop">
+                    </div>
+                </div>
+                <div class="about-text gsap-reveal">
+                    <h3 class="highlight-text">Pro. Shree Jaiswal</h3>
+                    <p>We specialize in repairing and servicing all types of mobile phones with expertise in IC reballing, broken screen replacement, data recovery, and more.</p>
+                    <p>With years of experience in the mobile repair industry, we offer professional repairs with a quick turnaround time and competitive pricing.</p>
+                    <p>Our team of skilled technicians ensures your devices are handled with care and repaired to the highest standards.</p>
+                    <div class="experience-counter">
+                        <div class="counter-item">
+                            <span class="counter" data-count="2">0</span>
+                            <span>+</span>
+                            <p>Years Experience</p>
+                        </div>
+                        <div class="counter-item">
+                            <span class="counter" data-count="1000">0</span>
+                            <span>+</span>
+                            <p>Devices Repaired</p>
+                        </div>
+                        <div class="counter-item">
+                            <span class="counter" data-count="100">0</span>
+                            <span>%</span>
+                            <p>Satisfaction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    </section>
+    
+    <!-- Accessories Section (moved to appear after About section) -->
+    <section id="accessories" class="accessories">
+        <div class="container">
+            <h2 class="section-title gsap-reveal">Wholesale Accessories</h2>
+            <div class="accessories-content">                
+                <div class="accessories-info gsap-reveal">
+                    <h3>Wide Range of Mobile Accessories</h3>
+                    <p>We offer wholesale accessories for all major brands at competitive prices with premium quality and genuine parts.</p>
+                    <div class="second-hand">
+                        <h4>Second Hand Mobile Phones</h4>
+                        <p>Quality checked second-hand phones with 3-month warranty and excellent condition at affordable prices.</p>                        <div class="accessory-features">
+                            <div class="feature">
+                                <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-check"></use></svg>
+                                <span>Quality Tested</span>
+                            </div>
+                            <div class="feature">
+                                <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-exchange"></use></svg>
+                                <span>7-Day Replacement</span>
+                            </div>
+                            <div class="feature">
+                                <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-shield"></use></svg>
+                                <span>3-Month Warranty</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                <div class="brands-grid" id="brandsGrid">
+                    <div class="brand-item gsap-stagger glow-effect">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-apple"></use></svg>
+                        <span class="brand-name">iPhone</span>
+                        <div class="brand-overlay"></div>
+                    </div>
+                    <div class="brand-item gsap-stagger glow-effect">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-samsung"></use></svg>
+                        <span class="brand-name">Samsung</span>
+                        <div class="brand-overlay"></div>
+                    </div>
+                    <div class="brand-item gsap-stagger glow-effect">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-vivo"></use></svg>
+                        <span class="brand-name">Vivo</span>
+                        <div class="brand-overlay"></div>
+                    </div>
+                    <div class="brand-item gsap-stagger glow-effect">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-oppo"></use></svg>
+                        <span class="brand-name">Oppo</span>
+                        <div class="brand-overlay"></div>
+                    </div>
+                    <div class="brand-item gsap-stagger glow-effect">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-infinix"></use></svg>
+                        <span class="brand-name">Infinix</span>
+                        <div class="brand-overlay"></div>
+                    </div>
+                    <div class="brand-item gsap-stagger glow-effect">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-motorola"></use></svg>
+                        <span class="brand-name">Motorola</span>
+                        <div class="brand-overlay"></div>
+                    </div>
+                    <div class="brand-item gsap-stagger glow-effect">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-iqoo"></use></svg>
+                        <span class="brand-name">IQOO</span>
+                        <div class="brand-overlay"></div>
+                    </div>
+                    <div class="brand-item gsap-stagger glow-effect">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-oneplus"></use></svg>
+                        <span class="brand-name">OnePlus</span>
+                        <div class="brand-overlay"></div>
+                    </div>
+                    <div class="brand-item gsap-stagger glow-effect">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-poco"></use></svg>
+                        <span class="brand-name">POCO</span>
+                        <div class="brand-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section (moved after Accessories) -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title gsap-reveal">Our Services</h2>
+            <div class="services-grid">                
+                <div class="service-card gsap-reveal glow-effect">
+                    <div class="service-icon">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-tablet"></use></svg>
+                    </div>
+                    <h3>Broken Screen</h3>
+                    <p>Display replacement for all phone models with quality parts.</p>
+                </div>
+                <div class="service-card gsap-reveal glow-effect">
+                    <div class="service-icon">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-chip"></use></svg>
+                    </div>
+                    <h3>IC Reballing</h3>
+                    <p>Expert IC Reballing service for motherboard repairs.</p>
+                </div>                
+                <div class="service-card gsap-reveal glow-effect">
+                    <div class="service-icon">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-database"></use></svg>
+                    </div>
+                    <h3>Data Recovery</h3>
+                    <p>Rescue important data from damaged or malfunctioning devices.</p>
+                </div>
+                <div class="service-card gsap-reveal glow-effect">
+                    <div class="service-icon">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-lock"></use></svg>
+                    </div>
+                    <h3>Phone Unlock</h3>
+                    <p>Unlock phones from carrier restrictions or pattern/PIN locks.</p>
+                </div>
+                <div class="service-card gsap-reveal glow-effect">
+                    <div class="service-icon">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-tablet"></use></svg>
+                    </div>
+                    <h3>Broken Glass & LCD</h3>
+                    <p>Repair or replace damaged glass and LCD displays.</p>
+                </div>
+                <div class="service-card gsap-reveal glow-effect">
+                    <div class="service-icon">
+                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-battery"></use></svg>
+                    </div>
+                    <h3>Battery Replacement</h3>
+                    <p>Replace worn out batteries with new high-quality ones.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title gsap-reveal">Customer Reviews</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial-container">
+                    <div class="testimonial-card gsap-reveal">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">My phone screen was completely shattered, and they fixed it in just 2 hours. Excellent service and very fair pricing!</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Rahul Sharma</h4>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card gsap-reveal">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">I bought a second-hand Samsung phone from Gayatri Mobile and it works perfectly. Great condition and three months warranty!</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Priya Patel</h4>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="testimonial-card gsap-reveal">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">Fantastic service! They helped recover all my data from a damaged phone that another shop said was impossible. Highly recommend!</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Amit Kumar</h4>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="testimonial-card gsap-reveal">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">Amazing customer service and best quality products available here. ✨✨ Extremely satisfied with the repair work they did on my phone.</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Harsh Pandey</h4>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card gsap-reveal">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">The tempered glass and phone cover they recommended perfectly protected my device during an accidental drop. Excellent quality accessories at reasonable prices!</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Sneha Verma</h4>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card gsap-reveal">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">They replaced my iPhone battery in just 30 minutes and the phone feels like new again. Their technicians are truly skilled professionals who know what they're doing.</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Vijay Malhotra</h4>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                <div class="testimonial-loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="slider-controls">
+                    <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                    <div class="slider-dots">
+                        <!-- Dots will be dynamically generated based on number of testimonials -->
+                    </div>
+                    <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title gsap-reveal">Contact Us</h2>
+            <div class="contact-container">                <div class="contact-info gsap-reveal">
+                    <div class="contact-item gsap-stagger">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>8963900439, 7974639694</p>
+                        </div>
+                    </div>
+                    <div class="contact-item gsap-stagger">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Address</h3>
+                            <p>Gour Colony, Malakhedi Road, Near SBI Bank, Narmadapuram (M.P.)</p>
+                        </div>
+                    </div>
+                    <div class="contact-item gsap-stagger">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h3>Business Hours</h3>
+                            <p>Mon - Sat: 10:00 AM - 8:00 PM</p>
+                            <p>Sunday: By Appointment</p>
+                        </div>
+                    </div>
+                    <div class="contact-buttons">
+                        <a href="https://wa.me/918963900439" class="contact-btn whatsapp-btn gsap-stagger">
+                            <i class="fab fa-whatsapp"></i> WhatsApp Us
+                        </a>
+                        <a href="tel:+918963900439" class="contact-btn call-btn gsap-stagger">
+                            <i class="fas fa-phone"></i> Call Now
+                        </a>
+                    </div>                    <form id="contactForm" class="contact-form gsap-reveal">
+                        <h4>Quick Inquiry</h4>
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Tell us about your phone issue" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="form-submit-btn">Send Inquiry</button>
+                        <div class="form-message"></div>
+                    </form>                </div>                <div class="map-container gsap-reveal">
+                    <!-- Custom map with black theme -->
+                    <div id="map" style="width:100%; height:400px; border-radius:10px; position: relative; overflow: hidden;"></div>                    <!-- Fallback iframe for Google Maps in case JavaScript fails -->
+                    <div id="map-fallback" style="display:none; width:100%; height:400px; border-radius:10px; overflow: hidden;">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3690.233644899259!2d77.73170561496066!3d22.34952998530706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397d737103b1409b%3A0x6a03f6762d5a9d81!2sState%20Bank%20of%20India!5e0!3m2!1sen!2sin!4v1621842770964!5m2!1sen!2sin" 
+                            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" title="Gayatri Mobile location on map"></iframe>
+                    </div>
+                    <div class="map-button-container">
+                        <button id="showShopLocation" class="map-button">
+                            <i class="fas fa-map-marker-alt"></i> Open in Google Maps
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Gayatri Mobile</h3>
+                    <p>Mobile Repair & Accessories Expert</p>
+                </div>                <div class="social-links">
+                    <a href="https://www.facebook.com/share/19QDciMgoE/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/gayatri_mobile_111?igsh=MWN1eHNzcnNmM3VvdA==" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Gayatri Mobile. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
