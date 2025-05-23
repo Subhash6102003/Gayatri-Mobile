@@ -6,24 +6,15 @@
     <meta name="description" content="Mobile repair services and accessories in Narmadapuram. Expert repairs for all types of mobile phones with genuine parts.">
     <meta name="theme-color" content="#ffdd00">
     <title>Gayatri Mobile - Mobile Repair & Accessories Expert</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">    <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/svg+xml" href="images/logo.svg">    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
-    <!-- Vercel Speed Insights -->
-    <script>
-      window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
-    <!-- Vercel Speed Insights -->
-    <script>
-      window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
+    
     <style>
         /* Transparent Header Styles */
         header {
@@ -84,20 +75,41 @@
             transform: scale(1.2);
             filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
         }
+        
+        .static-map-wrapper {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 18px;
+            box-sizing: border-box;
+        }
+        .static-map-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #222;
+            display: block;
+        }
     </style>
 </head>
 <body>
     <!-- Header Section -->
     <header id="home">
-        <div class="container">
-            <div class="logo-container">                <div class="logo">
-                    <img src="images/logo.svg" alt="Gayatri Mobile Logo">
+        <div class="container">            <div class="logo-container">                <div class="logo">
+                    <img src="assets/images/logo.svg" alt="Gayatri Mobile Logo">
                 </div>
                 <div class="brand-info">
                     <h1>Gayatri Mobile</h1>
                     <p class="tagline">Mobile Repair & Accessories Expert</p>
                 </div>            </div>            <nav>
-                <div class="mobile-menu-btn">
+                <div class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </div>
                 <ul>
@@ -110,7 +122,23 @@
                 </ul>
             </nav>
         </div>
-    </header>    <!-- Hero Section -->
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-btn" id="mobileMenuClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a href="#home"><i class="fas fa-home nav-icon"></i> Home</a></li>
+            <li><a href="#about"><i class="fas fa-info-circle nav-icon"></i> About</a></li>
+            <li><a href="#accessories"><i class="fas fa-mobile-alt nav-icon"></i> Accessories</a></li>
+            <li><a href="#services"><i class="fas fa-tools nav-icon"></i> Services</a></li>
+            <li><a href="#testimonials"><i class="fas fa-star nav-icon"></i> Reviews</a></li>
+            <li><a href="#contact"><i class="fas fa-envelope nav-icon"></i> Contact</a></li>
+        </ul>
+    </nav><!-- Hero Section -->
     <section class="hero">
         <canvas id="hero-canvas"></canvas>
         <div class="container">
@@ -127,7 +155,7 @@
             <div class="about-content">
                 <div class="about-3d">
                     <canvas id="phone-model-canvas"></canvas>                    <div class="about-image">
-                        <img src="images/repair-shop.svg" alt="Mobile Repair Shop">
+                        <img src="assets/images/repair-shop.svg" alt="Mobile Repair Shop">
                     </div>
                 </div>
                 <div class="about-text gsap-reveal">
@@ -168,15 +196,15 @@
                         <h4>Second Hand Mobile Phones</h4>
                         <p>Quality checked second-hand phones with 3-month warranty and excellent condition at affordable prices.</p>                        <div class="accessory-features">
                             <div class="feature">
-                                <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-check"></use></svg>
+                                <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-check"></use></svg>
                                 <span>Quality Tested</span>
                             </div>
                             <div class="feature">
-                                <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-exchange"></use></svg>
+                                <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-exchange"></use></svg>
                                 <span>7-Day Replacement</span>
                             </div>
                             <div class="feature">
-                                <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-shield"></use></svg>
+                                <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-shield"></use></svg>
                                 <span>3-Month Warranty</span>
                             </div>
                         </div>
@@ -184,47 +212,47 @@
                 </div>                
                 <div class="brands-grid" id="brandsGrid">
                     <div class="brand-item gsap-stagger glow-effect">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-apple"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-apple"></use></svg>
                         <span class="brand-name">iPhone</span>
                         <div class="brand-overlay"></div>
                     </div>
                     <div class="brand-item gsap-stagger glow-effect">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-samsung"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-samsung"></use></svg>
                         <span class="brand-name">Samsung</span>
                         <div class="brand-overlay"></div>
                     </div>
                     <div class="brand-item gsap-stagger glow-effect">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-vivo"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-vivo"></use></svg>
                         <span class="brand-name">Vivo</span>
                         <div class="brand-overlay"></div>
                     </div>
                     <div class="brand-item gsap-stagger glow-effect">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-oppo"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-oppo"></use></svg>
                         <span class="brand-name">Oppo</span>
                         <div class="brand-overlay"></div>
                     </div>
                     <div class="brand-item gsap-stagger glow-effect">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-infinix"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-infinix"></use></svg>
                         <span class="brand-name">Infinix</span>
                         <div class="brand-overlay"></div>
                     </div>
                     <div class="brand-item gsap-stagger glow-effect">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-motorola"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-motorola"></use></svg>
                         <span class="brand-name">Motorola</span>
                         <div class="brand-overlay"></div>
                     </div>
                     <div class="brand-item gsap-stagger glow-effect">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-iqoo"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-iqoo"></use></svg>
                         <span class="brand-name">IQOO</span>
                         <div class="brand-overlay"></div>
                     </div>
                     <div class="brand-item gsap-stagger glow-effect">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-oneplus"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-oneplus"></use></svg>
                         <span class="brand-name">OnePlus</span>
                         <div class="brand-overlay"></div>
                     </div>
                     <div class="brand-item gsap-stagger glow-effect">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-poco"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-poco"></use></svg>
                         <span class="brand-name">POCO</span>
                         <div class="brand-overlay"></div>
                     </div>
@@ -240,42 +268,42 @@
             <div class="services-grid">                
                 <div class="service-card gsap-reveal glow-effect">
                     <div class="service-icon">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-tablet"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-tablet"></use></svg>
                     </div>
                     <h3>Broken Screen</h3>
                     <p>Display replacement for all phone models with quality parts.</p>
                 </div>
                 <div class="service-card gsap-reveal glow-effect">
                     <div class="service-icon">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-chip"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-chip"></use></svg>
                     </div>
                     <h3>IC Reballing</h3>
                     <p>Expert IC Reballing service for motherboard repairs.</p>
                 </div>                
                 <div class="service-card gsap-reveal glow-effect">
                     <div class="service-icon">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-database"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-database"></use></svg>
                     </div>
                     <h3>Data Recovery</h3>
                     <p>Rescue important data from damaged or malfunctioning devices.</p>
                 </div>
                 <div class="service-card gsap-reveal glow-effect">
                     <div class="service-icon">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-lock"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-lock"></use></svg>
                     </div>
                     <h3>Phone Unlock</h3>
                     <p>Unlock phones from carrier restrictions or pattern/PIN locks.</p>
                 </div>
                 <div class="service-card gsap-reveal glow-effect">
                     <div class="service-icon">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-tablet"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-tablet"></use></svg>
                     </div>
                     <h3>Broken Glass & LCD</h3>
                     <p>Repair or replace damaged glass and LCD displays.</p>
                 </div>
                 <div class="service-card gsap-reveal glow-effect">
                     <div class="service-icon">
-                        <svg class="brand-logo"><use xlink:href="images/brand-icons.svg#brand-battery"></use></svg>
+                        <svg class="brand-logo"><use xlink:href="assets/images/brand-icons.svg#brand-battery"></use></svg>
                     </div>
                     <h3>Battery Replacement</h3>
                     <p>Replace worn out batteries with new high-quality ones.</p>
@@ -471,11 +499,9 @@
                         <div class="form-message"></div>
                     </form>                </div>                <div class="map-container gsap-reveal">
                     <!-- Custom map with black theme -->
-                    <div id="map" style="width:100%; height:400px; border-radius:10px; position: relative; overflow: hidden;"></div>                    <!-- Fallback iframe for Google Maps in case JavaScript fails -->
-                    <div id="map-fallback" style="display:none; width:100%; height:400px; border-radius:10px; overflow: hidden;">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3690.233644899259!2d77.73170561496066!3d22.34952998530706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397d737103b1409b%3A0x6a03f6762d5a9d81!2sState%20Bank%20of%20India!5e0!3m2!1sen!2sin!4v1621842770964!5m2!1sen!2sin" 
-                            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" title="Gayatri Mobile location on map"></iframe>
-                    </div>
+                    <div class="static-map-wrapper">
+    <img src="assets/images/image-1748019629364.png" alt="Narmadapuram Map" class="static-map-img" loading="lazy">
+</div>
                     <div class="map-button-container">
                         <button id="showShopLocation" class="map-button">
                             <i class="fas fa-map-marker-alt"></i> Open in Google Maps
@@ -497,7 +523,6 @@
                     <a href="https://www.facebook.com/share/19QDciMgoE/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://www.instagram.com/gayatri_mobile_111?igsh=MWN1eHNzcnNmM3VvdA==" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
             <div class="copyright">
@@ -506,6 +531,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

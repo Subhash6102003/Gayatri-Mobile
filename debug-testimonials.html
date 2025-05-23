@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Testimonials</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #353839; 
+            color: #FFD700; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        .testimonials { 
+            padding: 50px 0; 
+        }
+        .testimonial-slider { 
+            border: 2px solid red; 
+            background: rgba(255,0,0,0.1); 
+        }
+        .testimonial-container { 
+            border: 2px solid blue; 
+            background: rgba(0,0,255,0.1); 
+            display: flex;
+            width: 600%;
+            overflow: hidden;
+        }
+        .testimonial-card { 
+            border: 2px solid green; 
+            background: rgba(0,255,0,0.1); 
+            flex: 0 0 16.666%;
+            padding: 20px;
+            margin: 10px;
+            min-height: 200px;
+        }
+        .testimonial-loading {
+            background: orange;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Debug: Testimonials Visibility Test</h1>
+    
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>Customer Reviews</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial-container">
+                    <div class="testimonial-card">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">My phone screen was completely shattered, and they fixed it in just 2 hours. Excellent service and very fair pricing!</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Rahul Sharma</h4>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">I bought a second-hand Samsung phone from Gayatri Mobile and it works perfectly. Great condition and three months warranty!</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Priya Patel</h4>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">Fantastic service! They helped recover all my data from a damaged phone that another shop said was impossible. Highly recommend!</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Amit Kumar</h4>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">Amazing customer service and best quality products available here. ✨✨ Extremely satisfied with the repair work they did on my phone.</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Harsh Pandey</h4>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">The tempered glass and phone cover they recommended perfectly protected my device during an accidental drop. Excellent quality accessories at reasonable prices!</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Sneha Verma</h4>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">They replaced my iPhone battery in just 30 minutes and the phone feels like new again. Their technicians are truly skilled professionals who know what they're doing.</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Vijay Malhotra</h4>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-loading">
+                    LOADING INDICATOR AREA
+                    <span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                </div>
+                
+                <div class="slider-controls">
+                    <button class="prev-btn">❮</button>
+                    <div class="slider-dots">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <button class="next-btn">❯</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

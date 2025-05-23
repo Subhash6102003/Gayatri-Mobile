@@ -16,9 +16,9 @@ A single-page static website for Gayatri Mobile, a mobile repair shop owned by P
 ## Project Structure
 
 - `index.html` - Main HTML document
-- `styles.css` - CSS styling for the website
-- `script.js` - JavaScript functionality for interactivity
-- `images/` - Directory containing website images
+- `css/styles.css` - CSS styling for the website
+- `js/script.js` - JavaScript functionality for interactivity
+- `assets/images/` - Directory containing website images
 
 ## Services Featured
 

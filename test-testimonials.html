@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Testimonials</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>Customer Reviews</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial-container">
+                    <div class="testimonial-card">
+                        <div class="quote">"Excellent mobile repair service! Quick and reliable."</div>
+                        <div class="customer">
+                            <strong>Rajesh Kumar</strong>
+                            <span>⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="quote">"Best place for mobile accessories. Great prices!"</div>
+                        <div class="customer">
+                            <strong>Priya Sharma</strong>
+                            <span>⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="quote">"Professional service and genuine parts. Highly recommended!"</div>
+                        <div class="customer">
+                            <strong>Amit Patel</strong>
+                            <span>⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="quote">"Bought a second-hand phone in perfect condition. Very satisfied!"</div>
+                        <div class="customer">
+                            <strong>Sunita Jain</strong>
+                            <span>⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="quote">"Quick screen replacement service. Good as new!"</div>
+                        <div class="customer">
+                            <strong>Vikash Singh</strong>
+                            <span>⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="quote">"Great customer service and fair pricing. Will come again!"</div>
+                        <div class="customer">
+                            <strong>Meera Gupta</strong>
+                            <span>⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <button class="prev-btn">❮</button>
+                    <button class="next-btn">❯</button>
+                </div>
+                <div class="slider-dots"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simplified testimonial slider for testing
+        function initTestimonialSlider() {
+            const testimonialContainer = document.querySelector('.testimonial-container');
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            const sliderDots = document.querySelector('.slider-dots');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+
+            if (!testimonialContainer || !testimonialCards.length) {
+                console.warn('Testimonial slider elements not found');
+                return;
+            }
+
+            let currentSlide = 0;
+            const totalSlides = testimonialCards.length;
+            let autoSlideInterval;
+
+            // Generate dots for navigation
+            function createDots() {
+                if (!sliderDots) return;
+                
+                sliderDots.innerHTML = '';
+                for (let i = 0; i < totalSlides; i++) {
+                    const dot = document.createElement('div');
+                    dot.classList.add('dot');
+                    if (i === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => goToSlide(i));
+                    sliderDots.appendChild(dot);
+                }
+            }
+
+            // Update active dot
+            function updateDots() {
+                const dots = document.querySelectorAll('.dot');
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+
+            // Go to specific slide
+            function goToSlide(slideIndex) {
+                currentSlide = slideIndex;
+                
+                // Check if we're on a very small screen
+                const isVerySmallScreen = window.innerWidth <= 400;
+                
+                if (isVerySmallScreen) {
+                    // On very small screens, move by 100% per slide
+                    const translateX = -(currentSlide * 100);
+                    testimonialContainer.style.transform = `translateX(${translateX}%)`;
+                } else {
+                    // Calculate exact percentage based on number of slides for normal screens
+                    const slideWidth = 100 / totalSlides; // 16.666% for 6 slides
+                    const translateX = -(currentSlide * slideWidth);
+                    testimonialContainer.style.transform = `translateX(${translateX}%)`;
+                }
+                
+                updateDots();
+                resetAutoSlide();
+            }
+
+            // Next slide
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                goToSlide(currentSlide);
+            }
+
+            // Previous slide
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                goToSlide(currentSlide);
+            }
+
+            // Auto slide functionality
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(nextSlide, 4000);
+            }
+
+            function resetAutoSlide() {
+                clearInterval(autoSlideInterval);
+                startAutoSlide();
+            }
+
+            // Event listeners
+            if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+            if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+            // Touch/swipe functionality
+            let startX = 0;
+            let endX = 0;
+
+            testimonialContainer.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            }, { passive: true });
+
+            testimonialContainer.addEventListener('touchend', (e) => {
+                endX = e.changedTouches[0].clientX;
+                const difference = startX - endX;
+                
+                if (Math.abs(difference) > 50) {
+                    if (difference > 0) {
+                        nextSlide();
+                    } else {
+                        prevSlide();
+                    }
+                }
+            }, { passive: true });
+
+            // Pause auto-slide on hover
+            testimonialContainer.addEventListener('mouseenter', () => {
+                clearInterval(autoSlideInterval);
+            });
+
+            testimonialContainer.addEventListener('mouseleave', () => {
+                startAutoSlide();
+            });
+
+            // Initialize
+            createDots();
+            startAutoSlide();
+            
+            console.log(`Testimonial slider initialized with ${totalSlides} slides`);
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initTestimonialSlider);
+    </script>
+</body>
+</html>

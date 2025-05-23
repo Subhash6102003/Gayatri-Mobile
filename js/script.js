@@ -82,7 +82,7 @@ function handleNoWebGL() {
 // Enhanced function to ensure SVG icons are properly loaded
 function preloadSVGIcons() {
     // Fetch the SVG sprite file to ensure it's cached
-    fetch('images/brand-icons.svg')
+    fetch('assets/images/brand-icons.svg')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Failed to load SVG icons: ${response.status} ${response.statusText}`);
@@ -154,27 +154,37 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // Initialize GSAP animations
     initGSAP();
+      // Mobile menu functionality
+    initializeMobileMenu();
     
-    // Mobile menu functionality
-    initMobileMenu();
+    // Enhanced smooth scrolling
+    initializeSmoothScrolling();
     
-    // Smooth scrolling
-    initSmoothScrolling();
+    // Enhanced header scroll effect
+    initializeHeaderScrollEffect();
+    
+    // Touch optimizations for mobile
+    initializeTouchOptimizations();
+    
+    // Image optimizations
+    initializeImageOptimizations();
     
     // Scroll to top button
     initScrollToTopButton();
-    
-    // Initialize counter animations
+      // Initialize counter animations
     initCounters();
 
     // Initialize testimonial slider
+    console.log('About to initialize testimonial slider...');
     initTestimonialSlider();
     
     // Initialize form submission
     initFormSubmission();
     
-    // Initialize transparent header with scroll effect
-    initTransparentHeader();
+    // Initialize transparent header with scroll effect (fallback)
+    if (typeof initTransparentHeader === 'function') {
+        initTransparentHeader();
+    }
 });
 
 // Three.js initialization for hero section
@@ -807,836 +817,200 @@ function initMobileMenu() {
     });
 }
 
-// Smooth scrolling
-function initSmoothScrolling() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            // Close mobile menu if open
-            const mobileMenu = document.querySelector('nav ul');
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn i');
-            
-            if (window.innerWidth < 992 && mobileMenu && mobileMenu.classList.contains('active')) {
-                mobileMenu.classList.remove('active');
-                if (mobileMenuBtn) {
-                    mobileMenuBtn.classList.remove('fa-times');
-                    mobileMenuBtn.classList.add('fa-bars');
-                }
-            }
-            
-            if (targetElement) {
-                // Ensure ScrollToPlugin is available
-                if (gsap.getProperty && gsap.getProperty("scrollTo")) {
-                    gsap.to(window, {
-                        duration: 1,
-                        scrollTo: {
-                            y: targetElement,
-                            offsetY: 70
-                        },
-                        ease: 'power3.inOut'
-                    });
-                } else {
-                    // Fallback smooth scrolling
-                    const headerOffset = 70;
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
-                }
-            }
-        });
-    });
-}
+// Mobile Menu Functionality
+function initializeMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
 
-// Scroll to top button
-function initScrollToTopButton() {
-    window.addEventListener('scroll', function() {
-        let scrollToTopBtn = document.querySelector('.scroll-to-top');
-        
-        if (window.pageYOffset > 300) {
-            if (!scrollToTopBtn) {
-                const btn = document.createElement('button');
-                btn.innerHTML = '<i class="fas fa-arrow-up"></i>';
-                btn.className = 'scroll-to-top';
-                
-                btn.addEventListener('click', () => {
-                    gsap.to(window, {
-                        duration: 1,
-                        scrollTo: {
-                            y: 0
-                        },
-                        ease: 'power3.inOut'
-                    });
-                });
-                
-                document.body.appendChild(btn);
-                
-                // Animate button entrance
-                gsap.from(btn, {
-                    opacity: 0,
-                    scale: 0.5,
-                    duration: 0.3,
-                    ease: 'back.out(1.7)'
-                });
-            }
-        } else {
-            if (scrollToTopBtn) {
-                gsap.to(scrollToTopBtn, {
-                    opacity: 0,
-                    scale: 0.5,
-                    duration: 0.3,
-                    ease: 'power3.out',
-                    onComplete: () => scrollToTopBtn.remove()
-                });
-            }
-        }
-    });
-}
-
-// Counter animations for stats in About section
-function initCounters() {
-    const counters = document.querySelectorAll('.counter');
-    
-    counters.forEach(counter => {
-        // Set initial value
-        counter.innerText = '0';
-        
-        // Create counter animation
-        const updateCounter = () => {
-            const target = +counter.getAttribute('data-count');
-            const count = +counter.innerText;
-            const increment = target / 100;
-            
-            if (count < target) {
-                counter.innerText = Math.ceil(count + increment);
-                setTimeout(updateCounter, 30);
-            } else {
-                counter.innerText = target;
-            }
-        };
-        
-        // Trigger animation when the element is in view
-        ScrollTrigger.create({
-            trigger: counter,
-            start: 'top 80%',
-            onEnter: () => updateCounter()
-        });
-    });
-}
-
-// Enhanced Testimonial Slider with improved animations
-function initTestimonialSlider() {
-    console.log("Initializing testimonial slider");
-    const testimonialContainer = document.querySelector('.testimonial-container');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    const cards = document.querySelectorAll('.testimonial-card');
-    const sliderDotsContainer = document.querySelector('.slider-dots');
-    
-    if (!testimonialContainer || !prevBtn || !nextBtn || !cards.length) {
-        console.error("Could not initialize testimonial slider: Missing elements");
+    if (!mobileMenuBtn || !mobileNav || !mobileMenuOverlay) {
+        console.warn('Mobile menu elements not found');
         return;
     }
-    
-    // Log number of testimonial cards for debugging
-    console.log(`Found ${cards.length} testimonial cards`);
-    
-    let currentSlide = 0;
-    const maxSlide = cards.length - 1;
-    
-    // Set up testimonial container with correct width for all cards
-    testimonialContainer.style.width = `${cards.length * 100}%`;
-    
-    // Set up individual cards with equal width - exactly 16.666% for 6 cards
-    cards.forEach((card, index) => {
-        card.style.width = `calc(${100 / cards.length}% - 30px)`;
-        card.style.opacity = '1'; 
-        card.style.transform = 'scale(1)';
-        card.setAttribute('data-index', index);
+
+    // Open mobile menu
+    function openMobileMenu() {
+        mobileNav.classList.add('active');
+        mobileMenuOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
         
-        // Log each card for debugging
-        console.log(`Card ${index}: ${card.querySelector('.testimonial-text').textContent.substring(0, 20)}...`);
-    });
+        // Change hamburger to X icon
+        const icon = mobileMenuBtn.querySelector('i');
+        if (icon) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        }
+    }
+
+    // Close mobile menu
+    function closeMobileMenu() {
+        mobileNav.classList.remove('active');
+        mobileMenuOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+        
+        // Change X back to hamburger icon
+        const icon = mobileMenuBtn.querySelector('i');
+        if (icon) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+    }
+
+    // Event listeners
+    mobileMenuBtn.addEventListener('click', openMobileMenu);
     
-    // Create dots for navigation - important to do this BEFORE using the dots array
-    const dots = [];
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+    }
     
-    // Generate dots based on number of cards
-    if (sliderDotsContainer) {
-        sliderDotsContainer.innerHTML = ''; // Clear any existing dots
-        for (let i = 0; i <= maxSlide; i++) {
-            const dot = document.createElement('span');
-            dot.classList.add('dot');
-            dot.setAttribute('data-slide', i);
-            if (i === 0) dot.classList.add('active');
-            sliderDotsContainer.appendChild(dot);
-            dots.push(dot);
+    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+
+    // Close menu when clicking on navigation links
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            closeMobileMenu();
             
-            // Log dot creation
-            console.log(`Created dot ${i}`);
-        }
-        
-        // Make slider controls visible
-        const sliderControls = document.querySelector('.slider-controls');
-        if (sliderControls) {
-            sliderControls.style.opacity = '1';
-        }
-    }
-    
-    // Function to go to a specific slide with enhanced animation
-    function goToSlide(slide) {
-        console.log(`Going to slide ${slide}`);
-        
-        // Ensure slide is within bounds
-        if (slide < 0) slide = maxSlide;
-        if (slide > maxSlide) slide = 0;
-        
-        currentSlide = slide;
-        
-        // Calculate the exact percentage to translate
-        const translatePercentage = (currentSlide * 100 / cards.length);
-        console.log(`Translating container to: -${translatePercentage}%`);
-        
-        // Move the container to show current slide
-        testimonialContainer.style.transform = `translateX(-${translatePercentage}%)`;
-        
-        // Reset all cards to initial state
-        cards.forEach((card, i) => {
-            // Make all cards visible but style the current one differently
-            card.style.visibility = 'visible';
-            card.style.opacity = i === currentSlide ? '1' : '0.5';
-            card.style.transform = i === currentSlide ? 'scale(1)' : 'scale(0.9)';
-        });
-        
-        // Animate current card
-        gsap.to(cards[currentSlide], {
-            opacity: 1,
-            scale: 1,
-            duration: 0.5,
-            ease: 'back.out(1.7)'
-        });
-        
-        // Special effect for quote icon
-        const quoteIcon = cards[currentSlide].querySelector('.quote i');
-        if (quoteIcon) {
-            gsap.to(quoteIcon, {
-                rotation: 360,
-                scale: 1.2,
-                duration: 0.5,
-                ease: 'back.out(1.7)'
-            });
-        }
-        
-        // Make stars twinkle
-        const stars = cards[currentSlide].querySelectorAll('.rating i');
-        stars.forEach((star, i) => {
-            gsap.to(star, {
-                scale: 1.3,
-                color: '#FFD700',
-                duration: 0.2,
-                delay: 0.1 * i,
-                ease: 'power2.out',
-                yoyo: true,
-                repeat: 1
-            });
-        });
-        
-        // Update active dot
-        if (dots && dots.length > 0) {
-            dots.forEach(dot => dot.classList.remove('active'));
-            if (dots[currentSlide]) {
-                dots[currentSlide].classList.add('active');
-                
-                gsap.from(dots[currentSlide], {
-                    scale: 1.5,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
+            // Smooth scroll to target section
+            const targetId = link.getAttribute('href');
+            if (targetId && targetId.startsWith('#')) {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 300); // Small delay to allow menu to close first
+                }
             }
-        }
-    }
-    
-    // Event listeners for navigation
-    prevBtn.addEventListener('click', () => {
-        goToSlide(currentSlide - 1);
-    });
-    
-    nextBtn.addEventListener('click', () => {
-        goToSlide(currentSlide + 1);
-    });
-    
-    // Dot navigation
-    if (dots.length > 0) {
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                goToSlide(index);
-            });
         });
-    }
-    
-    // Auto slide functionality
-    let slideInterval = setInterval(() => {
-        goToSlide(currentSlide + 1);
-    }, 5000);
-    
-    // Pause auto slide on hover
-    testimonialContainer.addEventListener('mouseenter', () => {
-        clearInterval(slideInterval);
     });
-    
-    // Resume auto slide when mouse leaves
-    testimonialContainer.addEventListener('mouseleave', () => {
-        slideInterval = setInterval(() => {
-            goToSlide(currentSlide + 1);
-        }, 5000);
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+            closeMobileMenu();
+        }
     });
-    
-    // Initialize first slide
-    goToSlide(0);
+
+    // Close menu on window resize if screen becomes larger
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && mobileNav.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
 }
 
-// Create custom cursor
-document.addEventListener('DOMContentLoaded', function() {
-    // Create custom cursor elements
-    const cursor = document.createElement('div');
-    cursor.classList.add('custom-cursor');
+// Enhanced smooth scrolling for all navigation links
+function initializeSmoothScrolling() {
+    const allNavLinks = document.querySelectorAll('nav a[href^="#"], .mobile-nav a[href^="#"]');
     
-    const cursorInner = document.createElement('div');
-    cursorInner.classList.add('cursor-inner');
-    
-    const cursorOuter = document.createElement('div');
-    cursorOuter.classList.add('cursor-outer');
-    
-    cursor.appendChild(cursorInner);
-    cursor.appendChild(cursorOuter);
-    document.body.appendChild(cursor);
-    
-    // Update cursor position on mouse move
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = `${e.clientX}px`;
-        cursor.style.top = `${e.clientY}px`;
-    });
-    
-    // Add/remove grow class on interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, .service-card, .brand-item, .social-icon');
-    
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursor.classList.add('cursor-grow');
-        });
-        
-        el.addEventListener('mouseleave', () => {
-            cursor.classList.remove('cursor-grow');
+    allNavLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetId = link.getAttribute('href');
+            if (targetId && targetId.startsWith('#') && targetId !== '#') {
+                e.preventDefault();
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
         });
     });
-    
-    // Hide cursor when it leaves window
-    document.addEventListener('mouseout', () => {
-        cursor.style.display = 'none';
-    });
-    
-    document.addEventListener('mouseover', () => {
-        cursor.style.display = 'block';
-    });
-});
+}
 
-// Add CSS for additional effects
-const style = document.createElement('style');
-style.innerHTML = `
-    .scroll-to-top {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: var(--primary-color);
-        color: var(--dark-color);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: none;
-        font-size: 16px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 99;
-        box-shadow: 0 3px 15px rgba(255, 221, 0, 0.4);
-        transition: all 0.3s ease;
-    }
-    
-    .scroll-to-top:hover {
-        background-color: var(--dark-color);
-        color: var(--primary-color);
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(255, 221, 0, 0.5);
-    }
-    
-    .animated-heading {
-        background: linear-gradient(to right, #ffffff, #ffdd00);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-size: 200% auto;
-        animation: textShine 5s linear infinite;
-    }
-    
-    @keyframes textShine {
-        to {
-            background-position: 200% center;
-        }
-    }
-    
-    .service-icon i {
-        transition: all 0.3s ease;
-    }
-    
-    .glow-on-hover {
-        position: relative;
-        z-index: 1;
-    }
-    
-    .glow-on-hover::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(circle at center, rgba(255, 221, 0, 0.8), transparent);
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        filter: blur(15px);
-    }
-    
-    .glow-on-hover:hover::after {
-        opacity: 0.5;
-    }
-      /* Enhanced call to action animations */
-    .animated-button {
-        animation: pulse 2s infinite;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .animated-button:before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: rgba(255, 221, 0, 0.3);
-        background: linear-gradient(
-            to right, 
-            rgba(255, 221, 0, 0.1) 0%, 
-            rgba(255, 221, 0, 0.3) 50%, 
-            rgba(255, 221, 0, 0.1) 100%
-        );
-        transform: rotate(30deg);
-        animation: shimmer 3s infinite;
-        z-index: -1;
-    }
-    
-    @keyframes shimmer {
-        0% { transform: translateX(-100%) rotate(30deg); }
-        100% { transform: translateX(100%) rotate(30deg); }
-    }
-    
-    @keyframes pulse {
-        0% {
-            box-shadow: 0 0 0 0 rgba(255, 221, 0, 0.7);
-        }
-        70% {
-            box-shadow: 0 0 0 15px rgba(255, 221, 0, 0);
-        }
-        100% {
-            box-shadow: 0 0 0 0 rgba(255, 221, 0, 0);
-        }
-    }
-    
-    /* Add animation to contact buttons */
-    .contact-btn {
-        position: relative;
-        overflow: hidden;
-        transform: translateZ(0);
-    }
-    
-    .contact-btn:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
-        transform: skewX(-25deg);
-        animation: contactBtnShine 3s infinite;
-    }
-    
-    @keyframes contactBtnShine {
-        0% { left: -100%; }
-        20% { left: 100%; }
-        100% { left: 100%; }
-    }
-    
-    /* Google Maps styles */    #map {
-        width: 100%;
-        height: 400px;
-        border-radius: 10px;
-        overflow: hidden;
-        position: relative;
-    }
-    
-    /* Hide default Google Maps UI elements */
-    .gm-svpc {
-        display: none !important;
-    }
-    
-    /* Custom marker style */
-    .gm-style .gm-marker {
-        background-color: #ffdd00;
-        border-radius: 50%;
-        width: 10px;
-        height: 10px;
-        transform: translate(-50%, -50%);
-    }
-    
-    /* Info window styles */
-    .gm-style .gm-style-iw {
-        background-color: #242f3e;
-        color: #ffd700;
-        padding: 10px;
-        border-radius: 8px;
-        font-family: 'Poppins', sans-serif;
-        font-size: 14px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-    
-    .gm-style .gm-style-iw h3 {
-        margin: 0 0 5px;
-        font-size: 16px;
-        color: #ffd700;
-    }
-    
-    .gm-style .gm-style-iw p {
-        margin: 0;
-        font-size: 14px;
-        color: #ffd700;
-    }
-    
-    /* Button to show shop location */
-    #showShopLocation {
-        background-color: var(--primary-color);
-        color: var(--dark-color);
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    #showShopLocation:hover {
-        background-color: var(--dark-color);
-        color: var(--primary-color);
-        transform: translateY(-2px);
-    }
-    
-    #showShopLocation.active {
-        background-color: var(--dark-color);
-        color: var(--primary-color);
-    }
-    
-    #showShopLocation i {
-        margin-right: 8px;
-    }
-`;
-document.head.appendChild(style);
-
-// Transparent header on scroll functionality
-function initTransparentHeader() {
+// Enhanced header scroll effect
+function initializeHeaderScrollEffect() {
     const header = document.querySelector('header');
-    const heroSection = document.querySelector('.hero');
-    let heroHeight = 0;
-    
-    if (heroSection) {
-        heroHeight = heroSection.offsetHeight - 100; // Subtract some offset for earlier trigger
-    }
-    
-    // Set initial state
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-    
-    // Update on scroll
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
+    if (!header) return;
+
+    let lastScrollTop = 0;
+    let scrollTimer = null;
+
+    function updateHeader() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (scrollTop > 100) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-    });
-    
-    // Update hero height on window resize
-    window.addEventListener('resize', () => {
-        if (heroSection) {
-            heroHeight = heroSection.offsetHeight - 100;
+
+        // Hide header on scroll down, show on scroll up (for mobile)
+        if (window.innerWidth <= 768) {
+            if (scrollTop > lastScrollTop && scrollTop > 200) {
+                // Scrolling down
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                header.style.transform = 'translateY(0)';
+            }
+        } else {
+            header.style.transform = 'translateY(0)';
         }
+
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (scrollTimer) {
+            clearTimeout(scrollTimer);
+        }
+        
+        scrollTimer = setTimeout(updateHeader, 10);
     });
+
+    // Initial check
+    updateHeader();
 }
 
-// Form submission functionality
-function initFormSubmission() {
-    const contactForm = document.getElementById('contactForm');
-    if (!contactForm) return;
+// Optimize touch interactions for mobile
+function initializeTouchOptimizations() {
+    // Add touch feedback for interactive elements
+    const interactiveElements = document.querySelectorAll('button, .btn-primary, .service-card, .brand-item, .social-icon, .mobile-menu-btn');
     
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+    interactiveElements.forEach(element => {
+        element.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+        }, { passive: true });
         
-        // Get form fields
-        const nameField = document.getElementById('name');
-        const phoneField = document.getElementById('phone');
-        const messageField = document.getElementById('message');
-        const formMessage = document.querySelector('.form-message');
+        element.addEventListener('touchend', function() {
+            this.style.transform = '';
+        }, { passive: true });
         
-        // Simple validation
-        let isValid = true;
-        let errorMsg = '';
-        
-        if (!nameField.value.trim()) {
-            isValid = false;
-            errorMsg = 'Please enter your name';
-            nameField.focus();
-        } else if (!phoneField.value.trim()) {
-            isValid = false;
-            errorMsg = 'Please enter your phone number';
-            phoneField.focus();
-        } else if (!validatePhone(phoneField.value.trim())) {
-            isValid = false;
-            errorMsg = 'Please enter a valid 10-digit phone number';
-            phoneField.focus();
-        } else if (!messageField.value.trim()) {
-            isValid = false;
-            errorMsg = 'Please enter your message';
-            messageField.focus();
-        }
-        
-        if (!isValid) {
-            formMessage.textContent = errorMsg;
-            formMessage.classList.add('error-message');
-            formMessage.classList.remove('success-message');
-            
-            // Shake animation for error
-            gsap.to(formMessage, {
-                x: [-10, 10, -10, 10, 0],
-                duration: 0.5,
-                ease: 'power2.inOut'
-            });
-            
-            return;
-        }
-        
-        // Collect form data
-        const formData = {
-            name: nameField.value.trim(),
-            phone: phoneField.value.trim(),
-            message: messageField.value.trim()
-        };
-        
-        // Animation to show processing
-        const submitBtn = contactForm.querySelector('.form-submit-btn');
-        const originalBtnText = submitBtn.textContent;
-        submitBtn.disabled = true;
-        
-        gsap.to(submitBtn, {
-            scale: 0.95,
-            duration: 0.2,
-            ease: 'power2.out',
-            onComplete: () => {
-                submitBtn.textContent = 'Sending...';
-                
-                // Simulate form submission (in real world, this would be an AJAX call)
-                setTimeout(() => {
-                    // Reset form
-                    contactForm.reset();
-                    
-                    // Show success message
-                    formMessage.textContent = 'Thank you! We\'ll contact you shortly.';
-                    formMessage.classList.add('success-message');
-                    formMessage.classList.remove('error-message');
-                    
-                    // Reset button
-                    submitBtn.textContent = originalBtnText;
-                    submitBtn.disabled = false;
-                    
-                    // Success animation
-                    gsap.fromTo(formMessage, 
-                        { opacity: 0, y: -20 }, 
-                        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
-                    );
-                    
-                    gsap.to(submitBtn, {
-                        scale: 1,
-                        duration: 0.3,
-                        ease: 'back.out(1.7)'
-                    });
-                    
-                    // Hide success message after some time
-                    setTimeout(() => {
-                        gsap.to(formMessage, {
-                            opacity: 0,
-                            y: -10,
-                            duration: 0.5
-                        });
-                    }, 5000);
-                }, 1500); // Simulate server delay
-            }
-        });
+        element.addEventListener('touchcancel', function() {
+            this.style.transform = '';
+        }, { passive: true });
     });
-    
-    // Phone number validation function
-    function validatePhone(phone) {
-        // Remove all non-digit characters
-        const digits = phone.replace(/\D/g, '');
-        // Validate that we have 10-12 digits (allowing for country codes)
-        return digits.length >= 10 && digits.length <= 12;
+
+    // Improve scrolling performance on iOS
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        document.body.style.webkitOverflowScrolling = 'touch';
     }
 }
 
-// Handle no WebGL support for phone model
-function handleNoPhoneModel() {
-    // Remove the canvas and display a static image instead
-    const canvas = document.getElementById('phone-model-canvas');
-    if (!canvas) return;
-    
-    // Replace with a static phone image
-    const container = canvas.parentElement;
-    canvas.remove();
-    
-    // Create a replacement div with animated elements
-    const replacement = document.createElement('div');
-    replacement.className = 'phone-fallback';
-    
-    // Create a stylized phone
-    const phone = document.createElement('div');
-    phone.className = 'phone-static';
-    
-    // Create screen
-    const screen = document.createElement('div');
-    screen.className = 'phone-screen';
-    
-    // Create camera dot
-    const camera = document.createElement('div');
-    camera.className = 'phone-camera';
-    
-    // Create home button
-    const homeBtn = document.createElement('div');
-    homeBtn.className = 'phone-home-button';
-    
-    // Assemble the phone
-    phone.appendChild(screen);
-    phone.appendChild(camera);
-    phone.appendChild(homeBtn);
-    replacement.appendChild(phone);
-    
-    // Insert into the container
-    container.appendChild(replacement);
-    
-    // Add CSS for the fallback phone
-    const style = document.createElement('style');
-    style.innerHTML = `
-        .phone-fallback {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .phone-static {
-            width: 120px;
-            height: 220px;
-            background-color: #1a1a1a;
-            border-radius: 20px;
-            position: relative;
-            border: 2px solid #333;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: floatPhone 3s ease-in-out infinite;
-        }
-        .phone-screen {
-            position: absolute;
-            top: 20px;
-            left: 10px;
-            width: calc(100% - 20px);
-            height: 140px;
-            background-color: #333;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .phone-screen:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: screenGlow 2s infinite;
-        }
-        .phone-camera {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #111;
-            border: 1px solid #444;
-        }
-        .phone-home-button {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #333;
-            border: 1px solid #555;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .phone-home-button:after {
-            content: '';
-            width: 15px;
-            height: 15px;
-            border-radius: 3px;
-            border: 1px solid #ffdd00;
-        }
-        @keyframes floatPhone {
-            0%, 100% { transform: translateY(0) rotate(0); }
-            50% { transform: translateY(-10px) rotate(2deg); }
-        }
-        @keyframes screenGlow {
-            0% { left: -100%; }
-            100% { left: 200%; }
-        }
-    `;
-    document.head.appendChild(style);
+// Optimize images for mobile
+function initializeImageOptimizations() {
+    // Add loading='lazy' to images that don't have it
+    const images = document.querySelectorAll('img:not([loading])');
+    images.forEach(img => {
+        img.setAttribute('loading', 'lazy');
+    });
+
+    // Optimize SVG icon rendering
+    const svgIcons = document.querySelectorAll('svg.brand-logo');
+    svgIcons.forEach(svg => {
+        svg.style.willChange = 'transform';
+    });
 }
 
 // Google Maps initialization with dark theme
@@ -1939,3 +1313,248 @@ document.addEventListener('DOMContentLoaded', function(event) {
     // Load Google Maps API
     loadGoogleMapsAPI();
 });
+
+// Initialize counter animations
+function initCounters() {
+    // ...existing code...
+}
+
+// Initialize testimonial slider
+function initTestimonialSlider() {
+    console.log('Testimonial slider initialization started...');
+    
+    const testimonialContainer = document.querySelector('.testimonial-container');
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
+    const sliderDots = document.querySelector('.slider-dots');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const testimonialLoading = document.querySelector('.testimonial-loading');
+    
+    console.log('Elements found:', {
+        container: !!testimonialContainer,
+        cards: testimonialCards.length,
+        dots: !!sliderDots,
+        prevBtn: !!prevBtn,
+        nextBtn: !!nextBtn
+    });
+    
+    if (!testimonialContainer || !testimonialCards.length) {
+        console.warn('Testimonial slider elements not found');
+        return;
+    }
+    
+    // Hide loading indicator
+    if (testimonialLoading) {
+        testimonialLoading.style.display = 'none';
+    }
+    
+    // Disable any GSAP animations that might be interfering
+    if (window.gsap) {
+        try {
+            // Kill any GSAP animations on testimonial elements
+            if (gsap.killTweensOf) {
+                gsap.killTweensOf('.testimonial-container, .testimonial-card');
+                console.log('Removed GSAP animations from testimonial elements');
+            }
+        } catch (e) {
+            console.warn('Error stopping GSAP animations:', e);
+        }
+    }
+    
+    let currentSlide = 0;
+    const totalSlides = testimonialCards.length;
+    let autoSlideInterval;
+    
+    console.log(`Setting up slider with ${totalSlides} slides`);
+    
+    // Generate dots for navigation
+    function createDots() {
+        if (!sliderDots) return;
+        
+        sliderDots.innerHTML = '';
+        
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                console.log(`Dot ${i} clicked`);
+                goToSlide(i);
+            });
+            sliderDots.appendChild(dot);
+        }
+        
+        console.log(`Created ${totalSlides} navigation dots`);
+    }
+
+    // Update active dot
+    function updateDots() {
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }      // Go to specific slide
+    function goToSlide(slideIndex) {
+        console.log(`Going to slide ${slideIndex}`);
+        currentSlide = slideIndex;
+        
+        // Set proper container width to fit all slides side by side
+        const containerWidth = totalSlides * 100;
+        testimonialContainer.style.width = `${containerWidth}%`;
+        
+        // Set width for each card
+        const cardWidth = 100 / totalSlides;
+        testimonialCards.forEach(card => {
+            card.style.width = `${cardWidth}%`;
+            card.style.float = 'left';
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+            
+            // Ensure card has proper z-index and no transform
+            card.style.zIndex = '5';
+            card.style.transform = 'none';
+            
+            // Remove any GSAP classes that might interfere
+            card.classList.remove('gsap-reveal', 'gsap-fade', 'gsap-slide-up');
+        });
+        
+        // Calculate the transform percentage
+        const translateX = -(currentSlide * cardWidth);
+        
+        console.log(`Transform: translateX(${translateX}%)`);
+        
+        // Apply transform using CSS with good fallbacks
+        try {
+            // Add !important to ensure no other styles override this
+            testimonialContainer.style.cssText += `
+                transform: translateX(${translateX}%) !important; 
+                -webkit-transform: translateX(${translateX}%) !important; 
+                -ms-transform: translateX(${translateX}%) !important;
+            `;
+        } catch (error) {
+            console.error('Error applying transform:', error);
+        }
+        
+        updateDots();
+        resetAutoSlide();
+    }
+
+    // Next slide
+    function nextSlide() {
+        const nextIndex = (currentSlide + 1) % totalSlides;
+        console.log(`Next slide: ${currentSlide} -> ${nextIndex}`);
+        goToSlide(nextIndex);
+    }
+
+    // Previous slide
+    function prevSlide() {
+        const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+        console.log(`Previous slide: ${currentSlide} -> ${prevIndex}`);
+        goToSlide(prevIndex);
+    }
+
+    // Auto slide functionality
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(() => {
+            console.log('Auto-advancing to next slide');
+            nextSlide();
+        }, 4000);
+    }
+
+    function stopAutoSlide() {
+        if (autoSlideInterval) {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = null;
+        }
+    }
+
+    function resetAutoSlide() {
+        stopAutoSlide();
+        startAutoSlide();
+    }    // Event listeners for navigation buttons
+    if (prevBtn) {
+        // Remove any existing event listeners to avoid duplicates
+        const newPrevBtn = prevBtn.cloneNode(true);
+        prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
+        
+        newPrevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Previous button clicked');
+            prevSlide();
+        });
+        console.log('Previous button event listener added');
+    } else {
+        console.warn('Previous button not found');
+    }
+    
+    if (nextBtn) {
+        // Remove any existing event listeners to avoid duplicates
+        const newNextBtn = nextBtn.cloneNode(true);
+        nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+        
+        newNextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Next button clicked');
+            nextSlide();
+        });
+        console.log('Next button event listener added');
+    } else {
+        console.warn('Next button not found');
+    }
+
+    // Touch/swipe support for mobile
+    let startX = 0;
+    let endX = 0;
+    
+    testimonialContainer.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+    }, { passive: true });
+    
+    testimonialContainer.addEventListener('touchend', (e) => {
+        endX = e.changedTouches[0].clientX;
+        const diffX = startX - endX;
+        
+        if (Math.abs(diffX) > 50) {
+            if (diffX > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+    }, { passive: true });
+
+    // Pause auto-slide on hover
+    testimonialContainer.addEventListener('mouseenter', stopAutoSlide);
+    testimonialContainer.addEventListener('mouseleave', startAutoSlide);    // Remove GSAP reveals from testimonial cards to prevent interference
+    testimonialCards.forEach(card => {
+        card.classList.remove('gsap-reveal');
+    });
+    
+    // Fix the z-index and visibility of all testimonial cards
+    document.querySelectorAll('.testimonial-card').forEach(card => {
+        card.style.opacity = '1';
+        card.style.visibility = 'visible';
+    });
+    
+    // Initialize testimonial container styles
+    testimonialContainer.style.overflow = 'hidden';
+    testimonialContainer.style.position = 'relative';
+    testimonialContainer.style.transition = 'transform 0.5s ease';
+    
+    // Initialize
+    createDots();
+    
+    // Use setTimeout to ensure slider starts after the DOM is fully processed
+    setTimeout(() => {
+        goToSlide(0); // Start with first slide
+        startAutoSlide();
+        console.log('Testimonial slider initialization completed with delay');
+    }, 500);
+    
+    console.log('Testimonial slider initialization completed');
+}
+
+// Initialize form submission
+function initFormSubmission() {
+    // ...existing code...
+}

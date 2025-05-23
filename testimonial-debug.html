@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonial Slider Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #353839;
+            color: #FFD700;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .testimonial-slider {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #FFD700;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .testimonial-container {
+            display: flex;
+            width: 600%;
+            transition: transform 0.7s ease;
+            transform: translateX(0%);
+        }
+        .testimonial-card {
+            flex: 0 0 16.666%;
+            padding: 20px;
+            background: #292c2d;
+            margin: 10px;
+            border-radius: 8px;
+            border: 1px solid #4a4c4d;
+            min-height: 200px;
+        }
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(42, 44, 44, 0.8);
+        }
+        .prev-btn, .next-btn {
+            background: transparent;
+            border: 2px solid #FFD700;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: #FFD700;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .prev-btn:hover, .next-btn:hover {
+            background: #FFD700;
+            color: #353839;
+            transform: scale(1.1);
+        }
+        .slider-dots {
+            display: flex;
+            gap: 10px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4a4c4d;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .dot.active {
+            background: #FFD700;
+            transform: scale(1.2);
+        }
+        .current-slide {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+            padding: 10px;
+            background: rgba(255, 221, 0, 0.1);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Testimonial Slider Debugging</h1>
+        
+        <div class="current-slide">
+            Current Slide: <span id="slideNumber">1</span> of 6
+        </div>
+        
+        <div class="testimonial-slider">
+            <div class="testimonial-container">
+                <div class="testimonial-card">
+                    <h3>Review 1 - Rahul Sharma</h3>
+                    <p>My phone screen was completely shattered, and they fixed it in just 2 hours. Excellent service and very fair pricing!</p>
+                    <div>⭐⭐⭐⭐⭐</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <h3>Review 2 - Priya Patel</h3>
+                    <p>I bought a second-hand Samsung phone from Gayatri Mobile and it works perfectly. Great condition and three months warranty!</p>
+                    <div>⭐⭐⭐⭐⭐</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <h3>Review 3 - Amit Kumar</h3>
+                    <p>Fantastic service! They helped recover all my data from a damaged phone that another shop said was impossible. Highly recommend!</p>
+                    <div>⭐⭐⭐⭐⭐</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <h3>Review 4 - Harsh Pandey</h3>
+                    <p>Amazing customer service and best quality products available here. ✨✨ Extremely satisfied with the repair work they did on my phone.</p>
+                    <div>⭐⭐⭐⭐⭐</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <h3>Review 5 - Sneha Verma</h3>
+                    <p>The tempered glass and phone cover they recommended perfectly protected my device during an accidental drop. Excellent quality accessories at reasonable prices!</p>
+                    <div>⭐⭐⭐⭐⭐</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <h3>Review 6 - Vijay Malhotra</h3>
+                    <p>They replaced my iPhone battery in just 30 minutes and the phone feels like new again. Their technicians are truly skilled professionals who know what they're doing.</p>
+                    <div>⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+            
+            <div class="slider-controls">
+                <button class="prev-btn">❮</button>
+                <div class="slider-dots"></div>
+                <button class="next-btn">❯</button>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px; padding: 20px; background: rgba(255,0,0,0.1); border-radius: 5px;">
+            <h3>Debug Info:</h3>
+            <div id="debugInfo">Waiting for slider to initialize...</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.testimonial-container');
+            const cards = document.querySelectorAll('.testimonial-card');
+            const dotsContainer = document.querySelector('.slider-dots');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const slideNumberEl = document.getElementById('slideNumber');
+            const debugInfo = document.getElementById('debugInfo');
+            
+            let currentSlide = 0;
+            const totalSlides = cards.length;
+            
+            // Create dots
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+            
+            function updateDebugInfo() {
+                const transform = container.style.transform;
+                debugInfo.innerHTML = `
+                    Current Slide: ${currentSlide + 1}<br>
+                    Total Slides: ${totalSlides}<br>
+                    Container Transform: ${transform}<br>
+                    Container Width: 600%<br>
+                    Card Width: 16.666% each
+                `;
+            }
+            
+            function updateDots() {
+                const dots = document.querySelectorAll('.dot');
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+            
+            function goToSlide(slideIndex) {
+                currentSlide = slideIndex;
+                const slideWidth = 100 / totalSlides; // 16.666%
+                const translateX = -(currentSlide * slideWidth);
+                
+                container.style.transform = `translateX(${translateX}%)`;
+                slideNumberEl.textContent = currentSlide + 1;
+                updateDots();
+                updateDebugInfo();
+                
+                console.log(`Slide ${currentSlide + 1}: translateX(${translateX}%)`);
+            }
+            
+            function nextSlide() {
+                const next = (currentSlide + 1) % totalSlides;
+                goToSlide(next);
+            }
+            
+            function prevSlide() {
+                const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+                goToSlide(prev);
+            }
+            
+            // Event listeners
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+            
+            // Initialize
+            goToSlide(0);
+            
+            // Auto advance for testing
+            setInterval(nextSlide, 3000);
+        });
+    </script>
+</body>
+</html>
