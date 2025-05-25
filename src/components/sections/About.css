@@ -1,0 +1,134 @@
+/* About Section Styles */
+.about {
+  padding-top: 110px;
+  padding-bottom: 80px;
+  background-color: var(--secondary-color);
+  position: relative;
+}
+
+.about-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.about-3d {
+  width: 45%;
+  max-width: 500px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#phone-model-canvas {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.about-image {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 0;
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.about-text {
+  width: 45%;
+  max-width: 600px;
+}
+
+.about-text h3 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.about-text p {
+  margin-bottom: 15px;
+  line-height: 1.7;
+}
+
+.highlight-text {
+  display: inline-block;
+  position: relative;
+}
+
+.highlight-text::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100px;
+  height: 2px;
+  background-color: var(--primary-color);
+  opacity: 0.6;
+}
+
+.experience-counter {
+  display: flex;
+  gap: 30px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.counter-item {
+  text-align: center;
+}
+
+.counter-item span {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  font-family: var(--font-heading);
+}
+
+.counter-item p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+
+@media (max-width: 992px) {
+  .about-content {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .about-3d, 
+  .about-text {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .experience-counter {
+    gap: 15px;
+    justify-content: space-between;
+  }
+
+  .counter-item span {
+    font-size: 2rem;
+  }
+
+  .counter-item p {
+    font-size: 0.8rem;
+  }
+}

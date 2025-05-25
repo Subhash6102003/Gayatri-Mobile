@@ -1,0 +1,87 @@
+/* Services Section Styles */
+.services {
+  padding-top: 110px;
+  padding-bottom: 80px;
+  position: relative;
+  background-color: var(--secondary-color);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.service-card {
+  background-color: var(--card-bg);
+  padding: 30px 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.4s ease;
+  position: relative;
+  border: 1px solid rgba(255, 215, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.service-icon {
+  margin-bottom: 20px;
+  width: 70px;
+  height: 70px;
+  background: rgba(255, 215, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  background: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.service-icon .brand-logo {
+  width: 35px;
+  height: 35px;
+  fill: var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon .brand-logo {
+  fill: var(--dark-color);
+}
+
+.service-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.service-card p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 0;
+  opacity: 0.9;
+}
+
+@media (max-width: 992px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}

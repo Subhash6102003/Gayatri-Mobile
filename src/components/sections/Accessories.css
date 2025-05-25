@@ -1,0 +1,188 @@
+/* Accessories Section Styles */
+.accessories {
+  padding-top: 110px;
+  padding-bottom: 80px;
+  position: relative;
+  background-color: var(--dark-color);
+}
+
+.accessories-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.accessories-info {
+  width: 45%;
+  max-width: 500px;
+}
+
+.accessories-info h3 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.accessories-info p {
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+.second-hand {
+  background-color: rgba(255, 215, 0, 0.05);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  margin-top: 30px;
+}
+
+.second-hand h4 {
+  font-family: var(--font-heading);
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.accessory-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.feature .brand-logo {
+  width: 20px;
+  height: 20px;
+  fill: var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+.feature:hover .brand-logo {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  width: 45%;
+  max-width: 500px;
+}
+
+.brand-item {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 25px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: visible; /* Changed from hidden to allow logo to expand on hover */
+  aspect-ratio: 1;
+  min-height: 120px; /* Ensure minimum height for content */
+}
+
+.brand-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.brand-item .brand-logo {
+  width: 50px;
+  height: 50px;
+  fill: var(--primary-color);
+  transition: all 0.3s ease;
+  display: block; /* Ensure proper display */
+  margin: 0 auto; /* Center the SVG */
+}
+
+.brand-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.brand-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.brand-item:hover .brand-overlay {
+  opacity: 1;
+}
+
+.brand-item:hover .brand-logo {
+  transform: scale(1.1); /* Reduced scale to prevent overflow */
+}
+
+.glow-effect {
+  position: relative;
+}
+
+.glow-effect::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary-color), transparent);
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.glow-effect:hover::before {
+  opacity: 0.3;
+}
+
+@media (max-width: 992px) {
+  .accessories-content {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .accessories-info,
+  .brands-grid {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .brands-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .brands-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .brands-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,134 @@
+/* Section Component Styles */
+
+.section {
+  padding: var(--spacing-xxl) 0;
+  position: relative;
+}
+
+/* Background variants */
+.section.bg-light {
+  background-color: var(--color-bg-light);
+}
+
+.section.bg-dark {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+}
+
+.section.bg-accent {
+  background-color: var(--color-bg-accent);
+}
+
+.section.bg-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+.section.bg-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text-light);
+}
+
+/* No padding modifier */
+.section.no-padding {
+  padding: 0;
+}
+
+/* Container styles */
+.section .container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.section .container-narrow {
+  max-width: 900px;
+}
+
+.section .container-wide {
+  max-width: 1400px;
+}
+
+.section .container-full {
+  max-width: 100%;
+  padding: 0;
+}
+
+/* Section header */
+.section-header {
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.section-title {
+  font-size: var(--font-size-xxl);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+
+/* Title decoration */
+.section-title:after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--color-primary);
+  margin: var(--spacing-sm) auto 0;
+}
+
+.section-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  max-width: 700px;
+  margin: var(--spacing-md) auto 0;
+}
+
+/* Dark and primary background text adjustments */
+.bg-dark .section-subtitle,
+.bg-primary .section-subtitle,
+.bg-secondary .section-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.bg-dark .section-title:after,
+.bg-primary .section-title:after,
+.bg-secondary .section-title:after {
+  background-color: #fff;
+}
+
+/* Section content */
+.section-content {
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .section {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .section-title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .section-subtitle {
+    font-size: var(--font-size-md);
+  }
+  
+  .section-header {
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 576px) {
+  .section {
+    padding: var(--spacing-lg) 0;
+  }
+  
+  .section-title {
+    font-size: var(--font-size-lg);
+  }
+}

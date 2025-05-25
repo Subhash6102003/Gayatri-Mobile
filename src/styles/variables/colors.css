@@ -1,0 +1,35 @@
+:root {
+  /* Primary Colors */
+  --primary-color: #FFD700; /* Regal gold */
+  --secondary-color: #2a2c2c;
+  --text-color: #FFD700; /* Regal gold for text */
+  --light-color: #424546;
+  --dark-color: #353839; /* Onyx black */
+  --success-color: #28a745;
+  --accent-color: #e6c200;
+  --border-color: #4a4c4d;
+  --card-bg: #292c2d;
+  
+  /* Fonts */
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+  
+  /* Legacy color variables mapped to new ones for backwards compatibility */
+  --color-primary: var(--primary-color);
+  --color-primary-light: var(--primary-color);
+  --color-primary-dark: var(--accent-color);
+  --color-secondary: var(--secondary-color);
+  --color-secondary-light: var(--light-color);
+  --color-secondary-dark: var(--dark-color);
+  --color-bg-light: var(--secondary-color);
+  --color-bg-dark: var(--dark-color);
+  --color-bg-accent: var(--card-bg);
+  --color-text-primary: var(--text-color);
+  --color-text-secondary: var(--accent-color);
+  --color-text-light: #ffffff;
+  
+  /* Additional Colors */
+  --color-hover: rgba(230, 194, 0, 0.1);
+  --color-shadow: rgba(0, 0, 0, 0.2);
+  --color-overlay: rgba(42, 44, 44, 0.8);
+}

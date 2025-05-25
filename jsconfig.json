@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@common/*": ["components/common/*"],
+      "@hooks/*": ["components/hooks/*"],
+      "@layout/*": ["components/layout/*"],
+      "@sections/*": ["components/sections/*"],
+      "@assets/*": ["assets/*"],
+      "@styles/*": ["styles/*"],
+      "@utils/*": ["utils/*"],
+      "@constants/*": ["constants/*"],
+      "@context/*": ["context/*"]
+    },
+    "module": "commonjs",
+    "target": "es6",
+    "jsx": "react",
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "build"]
+}
