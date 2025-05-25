@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="90" fill="#0f0f0f" stroke="#ffdd00" stroke-width="3" />
+  
+  <!-- Letter G stylized -->
+  <path d="M100 50 Q60 50 60 100 Q60 150 100 150 Q140 150 140 110 L110 110 L110 90 L160 90 L160 110 Q160 170 100 170 Q40 170 40 100 Q40 30 100 30 Q130 30 150 50 L135 70 Q120 55 100 55 Z" fill="#ffdd00" />
+  
+  <!-- Mobile phone icon -->
+  <rect x="85" y="70" width="30" height="60" rx="5" fill="#1a1a1a" stroke="#ffdd00" stroke-width="2" />
+  <rect x="90" y="75" width="20" height="35" rx="2" fill="#333" />
+  <circle cx="100" cy="120" r="5" fill="#ffdd00" />
+</svg>

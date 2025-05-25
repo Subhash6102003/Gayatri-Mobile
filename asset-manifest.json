@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Gayatri-Mobile/static/css/main.71ea5811.css",
+    "main.js": "/Gayatri-Mobile/static/js/main.cef6c3ec.js",
+    "static/media/image.png.png": "/Gayatri-Mobile/static/media/image.png.d0ca839c7df5e0027dfa.png",
+    "index.html": "/Gayatri-Mobile/index.html",
+    "static/media/repair-shop.svg": "/Gayatri-Mobile/static/media/repair-shop.2f7f906e2c7bd575efd2fc99157169c7.svg",
+    "main.71ea5811.css.map": "/Gayatri-Mobile/static/css/main.71ea5811.css.map",
+    "main.cef6c3ec.js.map": "/Gayatri-Mobile/static/js/main.cef6c3ec.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.71ea5811.css",
+    "static/js/main.cef6c3ec.js"
+  ]
+}
