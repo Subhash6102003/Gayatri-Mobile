@@ -78,10 +78,17 @@ nav ul {
   gap: 20px;
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 nav ul li {
   margin: 0;
+  padding: 0;
+}
+
+nav ul li::before,
+nav ul li::after {
+  display: none;
 }
 
 nav ul li a {

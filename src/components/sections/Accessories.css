@@ -81,8 +81,9 @@
 }
 
 .brand-item {
-  background-color: var(--card-bg);
-  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(255, 215, 0, 0.05), rgba(255, 215, 0, 0.1));
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  border-radius: 15px;
   padding: 25px 15px;
   display: flex;
   flex-direction: column;
@@ -92,9 +93,10 @@
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
-  overflow: visible; /* Changed from hidden to allow logo to expand on hover */
+  overflow: visible;
   aspect-ratio: 1;
-  min-height: 120px; /* Ensure minimum height for content */
+  min-height: 120px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .brand-item:hover {
@@ -103,12 +105,23 @@
 }
 
 .brand-item .brand-logo {
-  width: 50px;
-  height: 50px;
-  fill: var(--primary-color);
+  font-size: 2.5rem;
+  color: var(--primary-color);
   transition: all 0.3s ease;
-  display: block; /* Ensure proper display */
-  margin: 0 auto; /* Center the SVG */
+  filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.2));
+}
+
+.brand-item:hover .brand-logo {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.4));
+}
+
+.brand-item span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+  text-align: center;
+  margin-top: 10px;
 }
 
 .brand-name {
@@ -156,6 +169,43 @@
 
 .glow-effect:hover::before {
   opacity: 0.3;
+}
+
+.brand-logo.samsung, .brand-logo.apple, .brand-logo.xiaomi { 
+  width: 48px;
+  height: 48px;
+  transition: all 0.3s ease;
+}
+.brand-logo.apple { color: #A2AAAD; }
+.brand-logo.xiaomi { color: #FF6900; }
+.brand-logo.oppo { color: #008000; }
+.brand-logo.vivo { color: #0082FF; }
+.brand-logo.oneplus { color: #EB0028; }
+.brand-logo.realme { color: #FFC803; }
+
+.brand-item:hover .brand-logo {
+  color: var(--primary-color);
+}
+
+.brand-item:hover .brand-logo.samsung {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 15px rgba(250, 176, 5, 0.5));
+}
+
+.brand-item:hover .brand-logo.xiaomi {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+.brand-logo.samsung path,
+.brand-logo.apple path {
+  fill: var(--primary-color);
+  transition: fill 0.3s ease;
+}
+
+.brand-item:hover .brand-logo.samsung path,
+.brand-item:hover .brand-logo.apple path {
+  fill: #ffffff;
 }
 
 @media (max-width: 992px) {

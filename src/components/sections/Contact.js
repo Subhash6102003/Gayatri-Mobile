@@ -189,15 +189,18 @@ const Contact = () => {
               </div>
               <button type="submit" className="form-submit-btn">Send Inquiry</button>
               {formMessage && <div className="form-message success">{formMessage}</div>}
-            </form>
-          </div>          <div className="map-container gsap-reveal">
-            <div className="shop-image-container">              {/* Using local shop image instead of map */}              <div className="shop-image">                <img 
+            </form>          </div>
+          <div className="map-container gsap-reveal">
+            <div className="shop-image-container">
+              {/* Using local shop image instead of map */}
+              <div className="shop-image">
+                <img 
                   src={shopImage} 
                   alt="Gayatri Mobile Shop" 
                   className="shop-location-image"
+                  style={{ maxWidth: '100%', height: 'auto', objectFit: 'contain', padding: '10px' }}
                 />
               </div>
-             
             </div>
             <div className="map-button-container">
               <button 
@@ -207,13 +210,6 @@ const Contact = () => {
                 <FontAwesomeIcon icon="map-marker-alt" /> Open in Google Maps
               </button>
             </div>
-             <div className="image-overlay">
-                <div className="location-info">
-                  <FontAwesomeIcon icon="map-marker-alt" size="2x" />
-                  <span>Gayatri Mobile</span>
-                  <p>Gour Colony, Malakhedi Road, Near SBI Bank, Narmadapuram (M.P.)</p>
-                </div>
-              </div>
           </div>
         </div>
       </div>

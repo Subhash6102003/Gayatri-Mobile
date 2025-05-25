@@ -9,7 +9,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build && copy .nojekyll build\\",
+    "predeploy": "npm run build && copy .nojekyll build\\ && mkdir -p build/Gayatri-Mobile && copy build\\logo.svg build\\Gayatri-Mobile && copy build\\brand-icons.svg build\\Gayatri-Mobile",
     "deploy": "gh-pages -d build"
   },
   "keywords": [],
